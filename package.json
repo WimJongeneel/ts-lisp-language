@@ -1,0 +1,11 @@
+{
+  "name": "ts-lisp-language",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/WimJongeneel/ts-lisp-language.git",
+  "author": "WimJongeneel <wim.jongeneel1@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^4.4.2"
+  }
+}
