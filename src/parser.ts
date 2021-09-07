@@ -19,13 +19,14 @@ export const parse = (input: string[]): Func => {
 
     let current = input.shift()
     while(current != ')') {
+        if(current == undefined) throw new Error("Unexpected end of program")
+
         if(!Number.isNaN(Number(current))) args.push(Number(current))
         else if(current == '(') {
             input.unshift('(')
             args.push(parse(input))
         }
         else args.push(current)
-        
         current = input.shift()
     }
 
