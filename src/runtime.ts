@@ -10,6 +10,8 @@ const functions = new Map<string, (args: any[]) => any>([
     [ 'max', a => Math.max(...a) ],
     [ 'min', a => Math.min(...a) ],
     [ 'define', a => memory.set(a[0], a[1]) ],
+    [ 'inc', a => memory.set(a[0], memory.get(a[0]) + 1) ],
+    [ 'dec', a => memory.set(a[0], memory.get(a[0]) - 1) ],
     [ '$', a => memory.get(a[0]) ],
     // [ 'func', a => ({ func: a[0], args: a.splice(1), kind: FuncKind }) ],
     [ 'list', a => a ],
