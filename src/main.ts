@@ -10,6 +10,8 @@ run('(define foo 42)')
 run('(print ($ foo))')
 run('(dec foo)')
 run('(print ($ foo))')
+run('(define b 1)')
+run('(print (smaller ($ b) -42)))')
 
 // run('(print (+ ($ foo) 1))')
 // run('(define l (list 1 ($ foo) 3)))')
