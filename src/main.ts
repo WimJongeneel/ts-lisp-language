@@ -13,10 +13,9 @@ const run = (program: string) => {
 // run('(define b 1)')
 // run('(print (smaller ($ b) -42)))')
 
-run('(define f (lambda (a b) (+ ($ a) ($ b))))')
-run('(define a 1)')
-run('(define b 2)')
-run('(print (apply ($ f)))')
+run('(define f (lambda a b (+ $a 1 (apply (lambda a b (+ $a $b)) (* $a 9) (+ $b 9)) )))')
+run('(print ($ f))')
+run('(print (apply $f 3 4))')
 // run('(print (+ ($ foo) 1))')
 // run('(define l (list 1 ($ foo) 3)))')
 // run('(print (get ($ l) 1))')

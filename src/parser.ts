@@ -39,7 +39,10 @@ export const lex = (input: string): string[] => {
     let buffer = ''
 
     const flush = (next: string = undefined) => {
-        if(buffer != '') tokens.push(buffer)
+        if(buffer != '') {
+            if(buffer.startsWith('$') && buffer.length > 1) tokens.push('(', '$', buffer.substring(1), ')')
+            else tokens.push(buffer)
+        }
         buffer = ''
         if(next) tokens.push(next)
     }
