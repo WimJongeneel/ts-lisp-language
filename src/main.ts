@@ -24,6 +24,14 @@ const run = (program: string) => {
 // run('(print (size ($ l)))')
 // run('(print (size (++ ($ l) (list 99 9 9 9 9))))')
 
-run('(define foo 32)')
-run('(when (not (greater 3 2)) (lambda (update foo -1)))')
-run('(print $foo)')
+// run('(define foo 32)')
+// run('(when (smaller 3 2) (lambda (update foo -1)))')
+// run('(print $foo)')
+
+run('(define p (list + 1 1))')
+// run('(print $p)')
+run('(print (exec (list + 1 4)))')
+run('(define f (lambda (exec (list + 1 1))))')
+// run('(print $f)')
+// run('(print (apply $f))')
+// run('(print (apply $f))')

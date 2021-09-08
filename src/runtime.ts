@@ -67,8 +67,8 @@ const functions = new Map<string, (args: any[]) => any>([
         }
         return lambda
     }],
-    [ 'when', a => a[0] == 1 ? reduce(a[1].body) : undefined ]
-    // [ 'map', a => a[0].map(v => exec(a[0], [v])) ],
+    [ 'when', a => a[0] == 1 ? reduce(a[1].body) : undefined ],
+    [ 'exec', a => expr(a[0]) ]
 ])
 
 export const exec = (func: string, args: any[]) => {
@@ -84,4 +84,19 @@ const reduce = (value: any) => {
     }
 
     return value
+}
+
+const expr = (list: any[]) => {
+    const func = list[0]
+    if(typeof func == 'string' && functions.has(func)) {
+        return {
+            func,
+            kind: FuncKind,
+            args: [...list].splice(1).map(a => {
+                if(Array.isArray(a)) return expr(a)
+                return a
+            })
+        }
+    }
+    return list
 }
