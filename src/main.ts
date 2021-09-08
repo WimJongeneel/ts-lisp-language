@@ -30,8 +30,10 @@ const run = (program: string) => {
 
 run('(define p (list + 1 1))')
 // run('(print $p)')
-run('(print (exec (list + 1 4)))')
-run('(define f (lambda (exec (list + 1 1))))')
+run('(print (exec (list + (* 2 3) 4)))')
+
+
+// run('(define f (lambda (exec (list + 1 1))))')
 // run('(print $f)')
 // run('(print (apply $f))')
 // run('(print (apply $f))')

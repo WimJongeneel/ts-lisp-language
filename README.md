@@ -85,12 +85,14 @@ Lists are created by the `list` function. Items can be retrieved with the `get` 
 
 ## `Exec` function
 
-With `exec` you can execute lists as if they where your program. If you combine lambda that return lists and the exec function you get a powerful macro system that is thruly part of the language.
+With `exec` you can execute lists as if they where your program. If you combine lambda that return lists and the exec function you get a powerful macro system that is thruly part of the language. `exec` is recursive, it will execute all lists inside the list as well (if they are executable).
 
 ```
 (define p (list + 1 1))
 (print (exec $p))
 (define f (lambda (exec $p)))
+
+(print (exec (list + (* 2 3) 4)))
 ```
 
 ## Number functions
