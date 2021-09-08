@@ -1,4 +1,13 @@
-import { FuncKind } from './parser'
+import { FuncKind, AST } from './parser'
+
+const LambdaKind = Symbol("lambda")
+
+interface Lambda {
+    kind: typeof LambdaKind
+    body: AST
+    args: string[]
+    params: any[]
+}
 
 const memory = new Map<string, any>()
 
@@ -21,21 +30,40 @@ const functions = new Map<string, (args: any[]) => any>([
     [ 'inc', a => memory.set(a[0], memory.get(a[0]) + 1) ],
     [ 'dec', a => memory.set(a[0], memory.get(a[0]) - 1) ],
     [ '$', a => memory.get(a[0]) ],
-    // [ 'func', a => ({ func: a[0], args: a.splice(1), kind: FuncKind }) ],
+    [ 'call', a => ({ func: a[0], args: a.splice(1), kind: FuncKind }) ],
     [ 'list', a => a ],
     [ 'get', a => a[0][a[1]] ],
     [ 'set', a => a[0][a[1]] = a[2] ],
     [ 'print', a => console.log(a) ],
     [ 'size', a => a[0].length ],
-    [ '++', a => a.reduce((r, c) => [...r, ...c], [])]
+    [ '++', a => a.reduce((r, c) => [...r, ...c], [])],
+    [ 'lambda', a => {
+        const body = a[a.length - 1]
+        const args = a.splice(0, -1).map(String)
+        return { kind: LambdaKind, body, args, params: [] }
+    }],
+    [ 'apply', a => {
+        const lambda = { ...a[0], params: a[0].params.concat(a.splice(1)) }
+        if(lambda.args.length == lambda.params.length) {
+            // (lambda.args as string[]).forEach((p, i) => memory.set(p, lambda.params[i]))
+            return reduce(lambda.body)
+        }
+        return lambda
+    }]
     // [ 'map', a => a[0].map(v => exec(a[0], [v])) ],
 ])
 
 export const exec = (func: string, args: any[]) => {
     if(!functions.has(func)) throw new Error("Unknown function: " + func)
-    const argsValues = args.map(a => {
-        if(typeof a == 'object' && 'kind' in a && a.kind == FuncKind) return exec(a.func, a.args)
-        return a
-    })
+    // lambda args will be stored
+    const argsValues = func == 'lambda' ? args : args.map(reduce)
     return functions.get(func)(argsValues)
+}
+
+const reduce = (value: any) => {
+    if(typeof value == 'object' && 'kind' in value && value.kind == FuncKind) {
+        return reduce(exec(value.func, value.args))
+    }
+
+    return value
 }
