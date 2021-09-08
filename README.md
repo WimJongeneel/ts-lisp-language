@@ -27,8 +27,8 @@ Defining a variable is done with the `define` function. The types are `number`, 
 
 ```
 (define foo 42)
-(define opperator (list 1 2 3))
-(define opperator +)
+(define bar (list 1 2 3))
+(define baz +)
 ```
 
 Retrieving a variable is done with the `$` function. It is also posible to prefix identifiers with `$` for a shorthand notation:
