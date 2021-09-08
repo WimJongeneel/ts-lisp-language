@@ -45,7 +45,6 @@ const functions = new Map<string, (args: any[]) => any>([
     [ 'inc', a => set(a[0], get(a[0]) + 1) ],
     [ 'dec', a => set(a[0], get(a[0]) - 1) ],
     [ '$', a => get(a[0]) ],
-    [ 'call', a => ({ func: a[0], args: a.splice(1), kind: FuncKind }) ],
     [ 'list', a => a ],
     [ 'get', a => a[0][a[1]] ],
     [ 'set', a => a[0][a[1]] = a[2] ],
@@ -67,7 +66,8 @@ const functions = new Map<string, (args: any[]) => any>([
             return res
         }
         return lambda
-    }]
+    }],
+    [ 'when', a => a[0] == 1 ? reduce(a[1].body) : undefined ]
     // [ 'map', a => a[0].map(v => exec(a[0], [v])) ],
 ])
 
