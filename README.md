@@ -8,11 +8,11 @@ This project contains an interpreted language written in TypeScript. The design 
 (print ($ foo))
 ```
 
-Because a program is just a list of things, it is posible for a program in this language to write a program by creating a list and 'executing' it.
+Because a program is just a list of things, it is posible to write a program that writes programs by using the `list` functions.
 
 ## Basic functions
 
-In this language everything is a function. A function is called by writing its name and arguments between paratheses. For example the `+` function:
+In this language everything is done with functions. A function is called by writing its name and arguments between paratheses. For example the `+` function:
 
 ```
 (+ 1 2)
@@ -23,15 +23,15 @@ Here `+` and `print` are the names of functions. The other items in the lists ar
 
 ## Variables
 
-Defining a variable is done with the `define` function:
+Defining a variable is done with the `define` function. The types are `number`, `list` and `identifier`:
 
 ```
 (define foo 42)
-(define opperator +)
 (define opperator (list 1 2 3))
+(define opperator +)
 ```
 
-Retrieving a variable is done with the `$` function. It is also posible to use identifiers that start with $ as a shorthand notation:
+Retrieving a variable is done with the `$` function. It is also posible to prefix identifiers with `$` for a shorthand notation:
 
 ```
 ($ foo)
@@ -51,6 +51,8 @@ Defining a lambda is done with the `lambda` function. The last argument of this 
 ```
 (lambda a b (+ $a $b))
 ```
+
+The lambda function is special as it is the only function for which its parameter list isn't evaluated before calling the function. This allows the lambda to store the expression inside the memory to be excuted later on.
 
 ## Calling lambdas
 
@@ -88,7 +90,7 @@ With `exec` you can execute lists as if they where your program. If you combine 
 ```
 (define p (list + 1 1))
 (print (exec $p))
-(define f (lambda (exec (exec $p))))
+(define f (lambda (exec $p)))
 ```
 
 ## Number functions
