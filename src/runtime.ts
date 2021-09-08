@@ -41,6 +41,7 @@ const functions = new Map<string, (args: any[]) => any>([
     [ 'smaller', a => a[0] < a[1] ? 1 : 0],
     [ 'equals', a => a[0] == a[1] ? 1 : 0],
     [ 'define', a => define(a[0], a[1]) ],
+    [ 'update', a => set(a[0], a[1]) ],
     [ 'inc', a => set(a[0], get(a[0]) + 1) ],
     [ 'dec', a => set(a[0], get(a[0]) - 1) ],
     [ '$', a => get(a[0]) ],
